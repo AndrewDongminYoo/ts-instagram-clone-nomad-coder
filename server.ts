@@ -1,16 +1,21 @@
+import { PrismaClient } from '@prisma/client';
 import { ApolloServer, gql } from 'apollo-server';
+
+const client = new PrismaClient();
 
 // The GraphQL schema
 const typeDefs = gql`
 
   type Movie {
-    id: Int
-    title: String
-    year: Int
+    id: Int!
+    title: String!
+    year: Int!
+    genre: String
+    createdAt: String!
+    updatedAt: String!
   }
 
   type Query {
-    "A simple type for getting started!"
     movies: [Movie]
     movie: Movie
   }
@@ -24,7 +29,7 @@ const typeDefs = gql`
 // A map of functions which return data for the schema.
 const resolvers = {
   Query: {
-    movies: () => [],
+    movies: () => client.movie.findMany(),
     movie: () => ({ title: "Hello", year: 2022 })
   },
   Mutation: {
@@ -48,6 +53,8 @@ const server = new ApolloServer({
   resolvers,
 });
 
-server.listen().then(({ url }) => {
+server.listen().then(({ url }: {
+  url: String;
+}) => {
   console.log(`🚀 Server ready at ${url}`);
 });
