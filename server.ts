@@ -27,12 +27,16 @@ const resolvers = {
     movie: () => ({ title: "Hello", year: 2022 })
   },
   Mutation: {
-    createMovie: (_, args) => {
-      console.log(args);
+    createMovie: (_: any, { title }: {
+      title: String;
+    }) => {
+      console.log(title);
       return true;
     },
-    deleteMovie: (_, args) => {
-      console.log(args);
+    deleteMovie: (_: any, { title }: {
+      title: String;
+    }) => {
+      console.log(title);
       return true;
     }
   }
