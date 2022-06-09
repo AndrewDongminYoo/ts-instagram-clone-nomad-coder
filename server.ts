@@ -17,12 +17,13 @@ const typeDefs = gql`
 
   type Query {
     movies: [Movie]
-    movie: Movie
+    movie(id: Int!): Movie
   }
 
   type Mutation {
-    createMovie(title: String!): Boolean
-    deleteMovie(title: String!): Boolean
+    createMovie(title: String!, year: Int!, genre: String): Movie
+    updateMovie(id: Int!, title: String, year: Int, genre: String): Movie
+    deleteMovie(id: Int!): Movie
   }
 `;
 
@@ -30,21 +31,40 @@ const typeDefs = gql`
 const resolvers = {
   Query: {
     movies: () => client.movie.findMany(),
-    movie: () => ({ title: "Hello", year: 2022 })
+    movie: (_: any, { id }: { id: number; }) => client.movie.findUnique({ where: { id } }),
   },
   Mutation: {
-    createMovie: (_: any, { title }: {
-      title: String;
-    }) => {
-      console.log(title);
-      return true;
-    },
-    deleteMovie: (_: any, { title }: {
-      title: String;
-    }) => {
-      console.log(title);
-      return true;
-    }
+    createMovie: (_: any, { title, year, genre }: {
+      title: string;
+      year: number;
+      genre: string;
+    }) => client.movie.create({
+      data: {
+        title,
+        year,
+        genre
+      }
+    }),
+    updateMovie: (_: any, { id, title, year, genre }: {
+      id: number;
+      title: string;
+      year: number;
+      genre: string;
+    }) => client.movie.update({
+      where: { id },
+      data: {
+        title,
+        year,
+        genre
+      }
+    }),
+    deleteMovie: (_: any, { id }: {
+      id: number;
+    }) => client.movie.delete({
+      where: {
+        id
+      }
+    })
   }
 };
 
