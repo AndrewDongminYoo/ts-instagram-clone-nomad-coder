@@ -4,6 +4,6 @@ import client from "../client";
 export default {
   Query: {
     users: () => client.user.findMany(),
-    user: (_: any, { id }: { id: number; }) => client.user.findUnique({ where: { id } }),
+    seeProfile: (_: any, { id }: { id: number; }) => client.user.findUnique({ where: { id } }),
   },
 }
