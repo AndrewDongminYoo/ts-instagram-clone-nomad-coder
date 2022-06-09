@@ -1,0 +1,12 @@
+{
+  "ignore": [
+    "node_modules"
+  ],
+  "watch": [
+    "package-json",
+    "prisma",
+    "src"
+  ],
+  "exec": "babel-node --extensions \".ts\" server.ts",
+  "ext": "ts"
+}
