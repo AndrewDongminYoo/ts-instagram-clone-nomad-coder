@@ -1,5 +1,8 @@
 import client from "../client";
 import bcrypt from "bcrypt";
+import jwt from "jsonwebtoken";
+
+const SECRET_KEY: string = process.env.SECRET_KEY;
 
 // A map of functions which return data for the schema.
 export default {
@@ -40,19 +43,25 @@ export default {
     signinUser: async (_: any, { username, password }: { username: string; password: string; }) => {
       try {
         // check if user exists
-        const existUser = await client.user.findFirst({
+        const user = await client.user.findFirst({
           where: {
             username
           }
         })
-        if (!existUser) throw new Error("Username or email does not exist");
+        if (!user) throw new Error("Username or email does not exist");
         // check password
-        const isValid = await bcrypt.compare(password, existUser.password);
+        const isValid = await bcrypt.compare(password, user.password);
         if (!isValid) throw new Error("Password is incorrect");
+        // create token
+        const token = jwt.sign({
+          id: user.id,
+          username: user.username,
+          email: user.email,
+        }, SECRET_KEY, { expiresIn: "1h" });
         // return user
         return {
           ok: true,
-          error: null
+          token,
         }
       } catch (e: any) {
         return {
