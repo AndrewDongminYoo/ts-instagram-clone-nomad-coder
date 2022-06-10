@@ -8,6 +8,6 @@ export default gql`
   }
 
   type Mutation {
-    updateUser(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResult
+    updateAccount(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): editProfileResult
   }
 `;
