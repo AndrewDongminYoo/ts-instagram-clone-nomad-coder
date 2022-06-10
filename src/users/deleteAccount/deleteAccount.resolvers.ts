@@ -5,10 +5,21 @@ export default {
   Mutation: {
     deleteAccount: (_: any, { id }: {
       id: number;
-    }) => client.user.delete({
-      where: {
-        id
+    }) => {
+
+      try {
+        client.user.delete({
+          where: {
+            id
+          }
+
+        })
+      } catch (e: any) {
+        return {
+          ok: false,
+          error: e.message
+        }
       }
-    })
+    }
   }
 };
