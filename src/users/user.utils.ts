@@ -30,3 +30,17 @@ export const protectResolver = (user: User | null): User => {
   if (!user) throw new Error("You must be logged in.");
   return user;
 }
+
+export const wrappedResolver = (
+  resolverFn: Function,
+) => (
+  root: any, args: any, context: any, info: any
+) => {
+    if (!context.activeUser) {
+      return {
+        ok: false,
+        error: "You must be logged in.",
+      }
+    }
+    return resolverFn(root, args, context, info);
+  }

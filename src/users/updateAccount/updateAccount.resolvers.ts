@@ -12,13 +12,15 @@ export default {
         lastName,
         username,
         email,
-        password
+        password,
+        bio,
       }: {
         firstName: string;
         lastName: string;
         username: string;
         email: string;
         password: string;
+        bio: string;
       },
       { activeUser, protectResolver }: {
         activeUser: User | null,
@@ -45,6 +47,7 @@ export default {
             lastName,
             username,
             email,
+            bio,
             password: hashedPassword,
           },
           where: {

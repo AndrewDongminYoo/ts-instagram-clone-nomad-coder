@@ -1,6 +1,6 @@
 require('dotenv').config();
 import { ApolloServer } from 'apollo-server';
-import schema from './src/schema';
+import { resolvers, typeDefs } from './src/schema';
 import { protectResolver, verifyToken } from './src/users/user.utils';
 
 declare global {
@@ -14,7 +14,8 @@ declare global {
 }
 
 const server = new ApolloServer({
-  schema,
+  resolvers,
+  typeDefs,
   context: async ({ req }) => {
     const token = req.headers.authorization || '';
     return {
