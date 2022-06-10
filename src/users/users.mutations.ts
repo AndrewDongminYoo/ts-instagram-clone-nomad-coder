@@ -33,8 +33,32 @@ export default {
             password: hashedPassword,
           }
         })
-      } catch (e) {
-        return e;
+      } catch (e: any) {
+        return e.message;
+      }
+    },
+    signinUser: async (_: any, { username, password }: { username: string; password: string; }) => {
+      try {
+        // check if user exists
+        const existUser = await client.user.findFirst({
+          where: {
+            username
+          }
+        })
+        if (!existUser) throw new Error("Username or email does not exist");
+        // check password
+        const isValid = await bcrypt.compare(password, existUser.password);
+        if (!isValid) throw new Error("Password is incorrect");
+        // return user
+        return {
+          ok: true,
+          error: null
+        }
+      } catch (e: any) {
+        return {
+          ok: false,
+          error: e.message
+        }
       }
     },
     updateAccount: (_: any, {

@@ -15,11 +15,18 @@ export default gql`
 
   type Query {
     users: [User]
-    seeProfile(id: Int!): User
+    seeProfileId(id: Int!): User
+    seeProfile(username: String!): User
+  }
+
+  type LoginResult {
+    ok: Boolean!
+    error: String
   }
 
   type Mutation {
     createUser(firstName: String!, lastName: String, username: String!, email: String!, password: String!): User
+    signinUser(username: String!, password: String!): LoginResult!
     updateUser(id: Int!, firstName: String, lastName: String, username: String, email: String, password: String): User
     deleteUser(id: Int!): User
   }
