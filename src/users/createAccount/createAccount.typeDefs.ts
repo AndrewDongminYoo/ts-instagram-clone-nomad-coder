@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server-express";
 
 // The GraphQL schema
 export default gql`
@@ -8,6 +8,12 @@ export default gql`
   }
 
   type Mutation {
-    createAccount(firstName: String!, lastName: String, username: String!, email: String!, password: String!): CreateAccountResult!
+    createAccount(
+      firstName: String!
+      lastName: String
+      username: String!
+      email: String!
+      password: String!
+    ): CreateAccountResult!
   }
 `;

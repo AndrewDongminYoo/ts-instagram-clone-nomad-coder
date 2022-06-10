@@ -1,4 +1,4 @@
-import { gql } from "apollo-server";
+import { gql } from "apollo-server-express";
 
 // The GraphQL schema
 export default gql`
@@ -15,6 +15,8 @@ export default gql`
   }
 
   type Query {
-    seeProfile(username: String!): seeProfileResult
+    seeProfile(
+      username: String!
+    ): seeProfileResult
   }
 `;
