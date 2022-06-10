@@ -1,6 +1,7 @@
 require('dotenv').config();
 import { ApolloServer } from 'apollo-server';
 import schema from './src/schema';
+import { verifyToken } from './src/users/user.utils';
 
 declare global {
   namespace NodeJS {
@@ -14,6 +15,12 @@ declare global {
 
 const server = new ApolloServer({
   schema,
+  context: async ({ req }) => {
+    const token = req.headers.authorization || '';
+    return {
+      activeUser: await (token ? verifyToken(token) : null),
+    };
+  },
 });
 
 const PORT = process.env.PORT;

@@ -2,7 +2,7 @@ import { gql } from "apollo-server";
 
 // The GraphQL schema
 export default gql`
-  type User {
+  type seeProfileResult {
     id: Int!
     firstName: String!
     lastName: String
@@ -13,6 +13,6 @@ export default gql`
   }
 
   type Query {
-    seeProfile(username: String!): User
+    seeProfile(username: String!): seeProfileResult
   }
 `;

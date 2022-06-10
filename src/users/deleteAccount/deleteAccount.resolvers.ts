@@ -1,36 +1,34 @@
 import client from "../../client";
-import jwt from "jsonwebtoken";
-
-const SECRET_KEY = process.env.SECRET_KEY;
+import { ExecutionArgs } from "graphql";
+import { User } from "@prisma/client";
 
 // A map of functions which return data for the schema.
 export default {
   Mutation: {
-    deleteAccount: (_: any, { token }: {
-      token: string;
-    }) => {
-
+    deleteAccount: async (
+      _: any,
+      args: ExecutionArgs,
+      { activeUser }: { activeUser: User | null }
+    ) => {
       try {
         // check if user exists
-        jwt.verify(token, SECRET_KEY, async (err: any, decoded: any) => {
-          if (err) throw new Error("Invalid token");
-          // save user to db and return user
-          const deleted = await client.user.delete({
-            where: {
-              id: decoded.id
-            }
-          })
-          if (deleted.id) {
-            return {
-              ok: true,
-            }
-          } else {
-            return {
-              ok: false,
-              error: "Could not delete user"
-            }
+        if (!activeUser) throw new Error("You must be logged in.");
+        // save user to db and return user
+        const deleted = await client.user.delete({
+          where: {
+            id: activeUser.id
           }
-        });
+        })
+        if (deleted.id) {
+          return {
+            ok: true,
+          }
+        } else {
+          return {
+            ok: false,
+            error: "Could not delete user"
+          }
+        }
       } catch (e: any) {
         return {
           ok: false,

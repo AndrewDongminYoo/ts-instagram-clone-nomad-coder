@@ -7,7 +7,11 @@ const SECRET_KEY = process.env.SECRET_KEY;
 // A map of functions which return data for the schema.
 export default {
   Mutation: {
-    signinUser: async (_: any, { username, password }: { username: string; password: string; }) => {
+    signinUser: async (_: any,
+      { username, password }: {
+        username: string;
+        password: string;
+      }) => {
       try {
         // check if user exists
         const user = await client.user.findFirst({

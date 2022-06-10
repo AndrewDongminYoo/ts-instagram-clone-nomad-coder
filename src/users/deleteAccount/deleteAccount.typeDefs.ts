@@ -8,6 +8,6 @@ export default gql`
   }
 
   type Mutation {
-    deleteAccount(token: String!): DeleteAccountResult!
+    deleteAccount(): DeleteAccountResult!
   }
 `;
