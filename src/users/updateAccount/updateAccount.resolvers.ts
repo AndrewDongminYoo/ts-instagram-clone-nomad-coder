@@ -20,10 +20,12 @@ export default {
         email: string;
         password: string;
       },
-      { activeUser }:
-        { activeUser: User | null }) => {
+      { activeUser, protectResolver }: {
+        activeUser: User | null,
+        protectResolver: Function
+      }) => {
       try {
-        if (!activeUser) throw new Error("You must be logged in.");
+        let { id } = protectResolver(activeUser);
         // check if user exists or username is taken
         const existUser = await client.user.findFirst({
           where: {
@@ -46,7 +48,7 @@ export default {
             password: hashedPassword,
           },
           where: {
-            id: activeUser.id
+            id
           }
         })
         if (updated.id) {
