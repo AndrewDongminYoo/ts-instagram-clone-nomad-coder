@@ -7,16 +7,18 @@ export default {
   Mutation: {
     deleteAccount: async (
       _: any,
-      args: ExecutionArgs,
+      { username }: { username: string; },
       { activeUser }: { activeUser: User | null }
     ) => {
       try {
         // check if user exists
         if (!activeUser) throw new Error("You must be logged in.");
         // save user to db and return user
+        if (activeUser.username !== username)
+          throw new Error("You can only delete your own account.");
         const deleted = await client.user.delete({
           where: {
-            id: activeUser.id
+            username,
           }
         })
         if (deleted.id) {
