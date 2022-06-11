@@ -1,7 +1,7 @@
 import client from "../../client";
 import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
-import { FileUpload } from "graphql-upload";
+import { Upload } from "graphql-upload";
 import { createWriteStream, ReadStream } from "fs";
 
 // A map of functions which return data for the schema.
@@ -24,7 +24,7 @@ export default {
         email: string;
         password: string;
         bio: string;
-        avatar: Promise<FileUpload>;
+        avatar: Upload;
       },
       { activeUser, protectResolver }: {
         activeUser: User | null,
@@ -33,8 +33,9 @@ export default {
       try {
         let { id } = protectResolver(activeUser);
         let avatarUrl = undefined;
-        if (await avatar) {
-          const { filename, createReadStream } = await avatar;
+        if (avatar) {
+          const { filename, createReadStream } = await avatar.promise;
+          console.log(typeof createReadStream);
           const readStream: ReadStream = createReadStream();
           const newFilename = `${id}-${Date.now()}-${filename}`
           const writeStream = createWriteStream(

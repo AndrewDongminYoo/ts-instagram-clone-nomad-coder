@@ -28,7 +28,7 @@ declare global {
       };
     },
     // Using graphql-upload without CSRF prevention is very insecure.
-    csrfPrevention: true,
+    // csrfPrevention: true,
   });
 
   await server.start();
