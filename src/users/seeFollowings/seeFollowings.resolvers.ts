@@ -8,9 +8,9 @@ const take = 5;
 export default {
   Query: {
     seeFollowings: async (_: any,
-      { username, page }: {
+      { username, last }: {
         username: string;
-        page: number;
+        last: number;
       },
       { activeUser, protectResolver }: {
         activeUser: User | null,
@@ -28,7 +28,8 @@ export default {
           }
         }).following({
           take,
-          skip: take * (page - 1),
+          skip: last ? 1 : 0,
+          ...(last && { cursor: { id: last } }),
         });
         const countFollowings = await client.user.count({
           where: {
