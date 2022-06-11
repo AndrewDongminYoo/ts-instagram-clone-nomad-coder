@@ -31,14 +31,18 @@ export default {
         protectResolver: Function
       }) => {
       try {
-        const { filename, createReadStream } = await avatar;
-        const readStream: ReadStream = createReadStream();
-        const writeStream = createWriteStream(
-          process.cwd() + "/uploads/" + filename
-        );
-        readStream.pipe(writeStream);
-
         let { id } = protectResolver(activeUser);
+        let avatarUrl = undefined;
+        if (await avatar) {
+          const { filename, createReadStream } = await avatar;
+          const readStream: ReadStream = createReadStream();
+          const newFilename = `${id}-${Date.now()}-${filename}`
+          const writeStream = createWriteStream(
+            `${process.cwd()}/uploads/${newFilename}`);
+          readStream.pipe(writeStream);
+          avatarUrl = `http://localhost:4000/uploads/${newFilename}`;
+        }
+
         // check if user exists or username is taken
         const existUser = await client.user.findFirst({
           where: {
@@ -59,6 +63,7 @@ export default {
             username,
             email,
             bio,
+            avatar: avatarUrl,
             password: hashedPassword,
           },
           where: {

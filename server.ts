@@ -4,7 +4,7 @@ import { resolvers, typeDefs } from './src/schema';
 import { protectResolver, verifyToken } from './src/users/user.utils';
 import { Secret } from 'jsonwebtoken';
 import logger from 'morgan';
-import { graphqlUploadExpress } from "graphql-upload";
+import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.js";
 import express from 'express';
 
 declare global {
@@ -12,7 +12,6 @@ declare global {
     interface ProcessEnv {
       PORT: number;
       SECRET_KEY: Secret;
-      DATABASE_URL: string;
     }
   }
 }
@@ -37,8 +36,9 @@ declare global {
   const app = express();
   app.use(logger('tiny'));
   app.use("/static", express.static("uploads"));
+  app.use(graphqlUploadExpress({ maxFileSize: 10000000, maxFiles: 1 }));
   server.applyMiddleware({ app });
   app.listen({ port: PORT }, () => {
-    console.log(`🚀  Server is running on http://localhost:${PORT}${server.graphqlPath}`);
+    console.log(`🚀Server is running on http://localhost:${PORT}${server.graphqlPath}`);
   })
 })()
