@@ -16,10 +16,6 @@ export default {
         const user = await client.user.findUnique({
           where: {
             username
-          },
-          include: {
-            following: true,
-            followers: true,
           }
         })
         console.log("see profile", user);

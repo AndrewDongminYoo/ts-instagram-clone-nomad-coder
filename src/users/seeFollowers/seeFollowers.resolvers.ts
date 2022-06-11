@@ -1,6 +1,9 @@
 import { User } from "@prisma/client";
 import client from "../../client";
 
+// take means how many items to take from the database
+const take = 5;
+
 // A map of functions which return data for the schema.
 export default {
   Query: {
@@ -13,17 +16,36 @@ export default {
         activeUser: User | null,
         protectResolver: Function
       }) => {
-      const followers = await client.user.findUnique({ where: { username } }).followers();
-      const followers2 = await client.user.findMany({
-        where: {
-          followers: {
-            some: {
-              username,
+      try {
+        protectResolver(activeUser);
+        const followers = await client.user.findUnique({
+          where: {
+            username
+          }
+        }).followers({
+          take,
+          skip: take * (page - 1),
+        });
+        const countFollowers = await client.user.count({
+          where: {
+            following: {
+              some: {
+                username
+              }
             }
           }
+        })
+        return {
+          ok: true,
+          followers,
+          totalPages: Math.ceil(countFollowers / take)
+        };
+      } catch (e: any) {
+        return {
+          ok: false,
+          error: e.message,
         }
-      })
-      return followers;
+      }
     },
   },
 }
