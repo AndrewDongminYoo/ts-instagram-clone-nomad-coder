@@ -17,11 +17,11 @@ export default {
       });
       return exists > 0;
     },
-    isMyAccount: (
+    isMyAccount: async (
       { id }: { id: number; },
       _: any,
       { activeUser }: { activeUser: User | null }
-    ): boolean => {
+    ) => {
       console.log(`${id} === ${activeUser}`);
       if (!activeUser) return false
       return activeUser.id === id;

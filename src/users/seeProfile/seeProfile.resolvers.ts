@@ -6,6 +6,7 @@ export default {
   Query: {
     seeProfile: async (_: any,
       { username }: { username: string; },
+      context: any
     ) => {
       try {
         const user = await client.user.findUnique({
@@ -13,6 +14,7 @@ export default {
             username
           }
         })
+        console.log(context)
         console.log("see profile", user);
         return user;
       } catch {

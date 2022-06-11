@@ -9,6 +9,7 @@ export const verifyToken = async (token: string) => {
     let activeUser = null;
     if (!token) return activeUser;
     let { id } = jwt.verify(token, SECRET_KEY) as JwtPayload;
+    console.log(`verifiying token ${id}`);
     activeUser = await client.user.findUnique({
       where: {
         id,
