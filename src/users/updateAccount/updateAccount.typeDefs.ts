@@ -2,6 +2,8 @@ import { gql } from "apollo-server";
 
 // The GraphQL schema
 export default gql`
+  scalar Upload
+
   type editProfileResult {
     ok: Boolean!
     error: String
@@ -15,7 +17,7 @@ export default gql`
       email: String
       password: String
       bio: String
-      avatar: String
+      avatar: Upload
     ): editProfileResult!
   }
 `;

@@ -1,4 +1,3 @@
-import express from 'express';
 require('dotenv').config();
 import { ApolloServer } from 'apollo-server';
 import { resolvers, typeDefs } from './src/schema';

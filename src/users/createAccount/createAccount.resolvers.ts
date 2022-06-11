@@ -23,6 +23,7 @@ export default {
         if (existUser) throw new Error("Username or email already exists");
         // check hash password
         const hashedPassword = await bcrypt.hash(password, 10);
+        console.log(hashedPassword);
         // save user to db and return user
         client.user.create({
           data: {
