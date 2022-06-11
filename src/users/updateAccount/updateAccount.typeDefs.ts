@@ -1,4 +1,4 @@
-import { gql } from "apollo-server-express";
+import { gql } from "apollo-server";
 
 // The GraphQL schema
 export default gql`
@@ -15,7 +15,7 @@ export default gql`
       email: String
       password: String
       bio: String
-      avatar: Upload
+      avatar: String
     ): editProfileResult!
   }
 `;

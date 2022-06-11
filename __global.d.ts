@@ -1,2 +1,3 @@
-declare module 'graphql-upload/graphqlUploadExpress';
+declare module '@graphql-tools/merge';
+declare module '@graphql-tools/load-files';
 
