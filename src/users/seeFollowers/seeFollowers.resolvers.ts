@@ -14,6 +14,15 @@ export default {
         protectResolver: Function
       }) => {
       const followers = await client.user.findUnique({ where: { username } }).followers();
+      const followers2 = await client.user.findMany({
+        where: {
+          followers: {
+            some: {
+              username,
+            }
+          }
+        }
+      })
       return followers;
     },
   },
