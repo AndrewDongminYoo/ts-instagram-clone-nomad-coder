@@ -18,6 +18,10 @@ export default {
       }) => {
       try {
         protectResolver(activeUser);
+        const existUser = await client.user.findUnique({
+          where: { username }, select: { id: true }
+        })
+        if (!existUser) throw new Error("User does not exist");
         const followings = await client.user.findUnique({
           where: {
             username
@@ -35,10 +39,11 @@ export default {
             }
           }
         })
+        const totalPages = Math.ceil(countFollowings / take)
         return {
           ok: true,
           followings,
-          totalPages: Math.ceil(countFollowings / take)
+          totalPages,
         }
       } catch (e: any) {
         return {

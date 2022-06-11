@@ -13,8 +13,9 @@ export default {
       try {
         // console.log("resolver", activeUser);
         let { id } = await protectResolver(activeUser);
-        const checkUser = await client.user.findUnique({ where: { username: toUnfollow } });
+        const checkUser = await client.user.findUnique({ where: { username: toUnfollow }, select: { id: true } });
         if (!checkUser) throw new Error("User does not exist");
+        if (checkUser.id === id) throw new Error("You cannot unfollow yourself");
         await client.user.update({
           where: {
             id,
