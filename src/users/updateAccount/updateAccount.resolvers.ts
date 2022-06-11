@@ -14,6 +14,7 @@ export default {
         email,
         password,
         bio,
+        avatar
       }: {
         firstName: string;
         lastName: string;
@@ -21,12 +22,14 @@ export default {
         email: string;
         password: string;
         bio: string;
+        avatar: object;
       },
       { activeUser, protectResolver }: {
         activeUser: User | null,
         protectResolver: Function
       }) => {
       try {
+        console.log(avatar);
         let { id } = protectResolver(activeUser);
         // check if user exists or username is taken
         const existUser = await client.user.findFirst({

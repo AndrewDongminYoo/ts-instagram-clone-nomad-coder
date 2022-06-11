@@ -14,7 +14,8 @@ export default {
       email: string;
       password: string;
     }) => {
-      try {// check if user exists or username is taken
+      try {
+        // check if user exists or username is taken
         const existUser = await client.user.findFirst({
           where: {
             OR: [{ username }, { email }]
@@ -25,7 +26,7 @@ export default {
         const hashedPassword = await bcrypt.hash(password, 10);
         console.log(hashedPassword);
         // save user to db and return user
-        client.user.create({
+        await client.user.create({
           data: {
             firstName,
             lastName,

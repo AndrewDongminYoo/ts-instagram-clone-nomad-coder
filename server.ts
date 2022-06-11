@@ -3,6 +3,7 @@ import { ApolloServer } from 'apollo-server';
 import { resolvers, typeDefs } from './src/schema';
 import { protectResolver, verifyToken } from './src/users/user.utils';
 import { Secret } from 'jsonwebtoken';
+import { graphqlUploadExpress } from "graphql-upload";
 
 declare global {
   namespace NodeJS {
@@ -15,6 +16,7 @@ declare global {
 }
 
 const server: ApolloServer = new ApolloServer({
+  cors: true,
   resolvers,
   typeDefs,
   context: async ({ req }) => {
