@@ -3,14 +3,18 @@ import client from "../../client";
 
 // A map of functions which return data for the schema.
 export default {
-  Mutation: {
-    followUser: async (_: any,
-      { username }: { username: string; },
+  Query: {
+    seeFollowers: async (_: any,
+      { username, page }: {
+        username: string;
+        page: number;
+      },
       { activeUser, protectResolver }: {
         activeUser: User | null,
         protectResolver: Function
       }) => {
-
+      const followers = await client.user.findUnique({ where: { username } }).followers();
+      return followers;
     },
   },
 }

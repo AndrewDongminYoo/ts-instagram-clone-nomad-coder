@@ -5,9 +5,11 @@ export default gql`
   type seeFollowingsResult {
     ok: Boolean!
     error: String
+    followings: [User]
+    totalPages: Int
   }
 
-  type Mutation {
-    seeFollowings(username: String!): seeFollowingsResult!
+  type Query {
+    seeFollowings(username: String!, page: Int!): seeFollowingsResult!
   }
 `;
