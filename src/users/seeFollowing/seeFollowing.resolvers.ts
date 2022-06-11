@@ -7,7 +7,7 @@ const take = 5;
 // A map of functions which return data for the schema.
 export default {
   Query: {
-    seeFollowings: async (_: any,
+    seeFollowing: async (_: any,
       { username, last }: {
         username: string;
         last: number;
@@ -22,7 +22,7 @@ export default {
           where: { username }, select: { id: true }
         })
         if (!existUser) throw new Error("User does not exist");
-        const followings = await client.user.findUnique({
+        const following = await client.user.findUnique({
           where: {
             username
           }
@@ -31,7 +31,7 @@ export default {
           skip: last ? 1 : 0,
           ...(last && { cursor: { id: last } }),
         });
-        const countFollowings = await client.user.count({
+        const countFollowing = await client.user.count({
           where: {
             followers: {
               some: {
@@ -40,10 +40,10 @@ export default {
             }
           }
         })
-        const totalPages = Math.ceil(countFollowings / take)
+        const totalPages = Math.ceil(countFollowing / take)
         return {
           ok: true,
-          followings,
+          following,
           totalPages,
         }
       } catch (e: any) {

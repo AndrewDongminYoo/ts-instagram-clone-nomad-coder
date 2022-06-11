@@ -6,13 +6,8 @@ export default {
   Query: {
     seeProfile: async (_: any,
       { username }: { username: string; },
-      { activeUser, protectResolver }: {
-        activeUser: User | null,
-        protectResolver: Function
-      }) => {
+    ) => {
       try {
-        // console.log("resolver", activeUser);
-        protectResolver(activeUser);
         const user = await client.user.findUnique({
           where: {
             username

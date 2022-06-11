@@ -2,14 +2,14 @@ import { gql } from "apollo-server";
 
 // The GraphQL schema
 export default gql`
-  type seeFollowingsResult {
+  type seeFollowingResult {
     ok: Boolean!
     error: String
-    followings: [User]
+    following: [User]
     totalPages: Int
   }
 
   type Query {
-    seeFollowings(username: String!, last: Int): seeFollowingsResult!
+    seeFollowing(username: String!, last: Int): seeFollowingResult!
   }
 `;
