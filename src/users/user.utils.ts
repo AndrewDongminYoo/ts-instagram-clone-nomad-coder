@@ -1,25 +1,20 @@
 import { User } from '@prisma/client';
-import jwt, { UserJwtPayload } from 'jsonwebtoken';
+import jwt, { JwtPayload } from 'jsonwebtoken';
 import client from '../client';
 
 const SECRET_KEY = process.env.SECRET_KEY;
-
-declare module 'jsonwebtoken' {
-  export interface UserJwtPayload extends JwtPayload {
-    id: number;
-  }
-}
 
 export const verifyToken = async (token: string) => {
   try {
     let activeUser = null;
     if (!token) return activeUser;
-    let { id } = jwt.verify(token, SECRET_KEY) as UserJwtPayload;
+    let { id } = await jwt.verify(token, SECRET_KEY) as JwtPayload;
     activeUser = await client.user.findUnique({
       where: {
         id,
       }
     });
+    // console.log("activeUser", activeUser);
     return activeUser;
   } catch (e) {
     return null;

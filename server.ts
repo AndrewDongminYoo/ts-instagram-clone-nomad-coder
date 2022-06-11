@@ -22,6 +22,7 @@ declare global {
     typeDefs,
     context: async ({ req }) => {
       const token = req.headers.authorization || '';
+      // console.log(token);
       return {
         activeUser: await (token ? verifyToken(token) : null),
         protectResolver,
@@ -35,9 +36,9 @@ declare global {
   const PORT = process.env.PORT;
   const app = express();
   app.use(logger('tiny'));
+  app.use("/static", express.static("uploads"));
   server.applyMiddleware({ app });
-
   app.listen({ port: PORT }, () => {
-    console.log(`🚀  Server is running on http://localhost:${PORT}`);
+    console.log(`🚀  Server is running on http://localhost:${PORT}${server.graphqlPath}`);
   })
 })()

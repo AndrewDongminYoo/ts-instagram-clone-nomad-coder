@@ -11,12 +11,15 @@ export default {
         protectResolver: Function
       }) => {
       try {
+        // console.log("resolver", activeUser);
         protectResolver(activeUser);
-        return await client.user.findUnique({
+        const user = await client.user.findUnique({
           where: {
             username
           }
         })
+        console.log("see profile", user);
+        return user;
       } catch {
         return null;
       }
