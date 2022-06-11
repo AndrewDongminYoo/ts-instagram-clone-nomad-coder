@@ -1,6 +1,8 @@
 import client from "../../client";
 import bcrypt from "bcrypt";
 import { User } from "@prisma/client";
+import { FileUpload } from "graphql-upload";
+import { createWriteStream, ReadStream } from "fs";
 
 // A map of functions which return data for the schema.
 export default {
@@ -22,14 +24,20 @@ export default {
         email: string;
         password: string;
         bio: string;
-        avatar: object;
+        avatar: Promise<FileUpload>;
       },
       { activeUser, protectResolver }: {
         activeUser: User | null,
         protectResolver: Function
       }) => {
       try {
-        console.log(avatar);
+        const { filename, createReadStream } = await avatar;
+        const readStream: ReadStream = createReadStream();
+        const writeStream = createWriteStream(
+          process.cwd() + "/uploads/" + filename
+        );
+        readStream.pipe(writeStream);
+
         let { id } = protectResolver(activeUser);
         // check if user exists or username is taken
         const existUser = await client.user.findFirst({
