@@ -1,6 +1,10 @@
 {
   "ignore": [
-    "node_modules"
+    "node_modules",
+    "*.json",
+    "*.md",
+    ".babelrc",
+    ".env"
   ],
   "exec": "babel-node --extensions \".ts\" ./server.ts",
   "ext": "ts"
