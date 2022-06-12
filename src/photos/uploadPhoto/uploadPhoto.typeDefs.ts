@@ -4,6 +4,7 @@ export default gql`
   type UploadPhotoResult {
     ok: Boolean!
     error: String
+    photo: Photo
   }
 
   type Mutation {
