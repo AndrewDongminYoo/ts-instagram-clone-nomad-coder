@@ -13,14 +13,6 @@ export default gql`
     comments: [Comment]
   }
 
-  type Hashtag {
-    id: Int!
-    hashtag: String!
-    photos: [Photo]
-    createdAt: String!
-    updatedAt: String!
-  }
-
   type Comment {
     id: Int!
     createdAt: String!

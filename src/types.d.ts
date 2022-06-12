@@ -4,6 +4,7 @@ import { Upload } from "graphql-upload";
 type Parent = {
   id: number;
   userId: number;
+  hashtag: string;
 }
 
 type Args = {
