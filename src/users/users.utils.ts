@@ -1,6 +1,7 @@
 import { User } from '@prisma/client';
 import jwt, { JwtPayload } from 'jsonwebtoken';
 import client from '../client';
+import { Args, Context, Info, Parent, Resolver } from '../types';
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -28,9 +29,9 @@ export const protectResolver = (user: User | null): User => {
 }
 
 export const wrappedResolver = (
-  resolverFn: Function,
+  resolverFn: Resolver,
 ) => (
-  root: any, args: any, context: any, info: any
+  root: Parent, args: Args, context: Context, info: Info
 ) => {
     if (!context.activeUser) {
       return {
