@@ -1,8 +1,9 @@
-import { PrismaClient, User } from "@prisma/client";
+import { Hashtag, PrismaClient, User } from "@prisma/client";
 import { Upload } from "graphql-upload";
 
 type Parent = {
   id: number;
+  userId: number;
 }
 
 type Args = {
@@ -21,6 +22,7 @@ type Args = {
   toFollow: string;
   file: Upload;
   caption: string;
+  hashtag: string;
 }
 
 type Context = {
