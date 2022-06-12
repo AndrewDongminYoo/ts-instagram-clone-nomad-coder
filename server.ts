@@ -6,6 +6,7 @@ import { Secret } from 'jsonwebtoken';
 import logger from 'morgan';
 import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.js";
 import express from 'express';
+import client from './src/client';
 
 declare global {
   namespace NodeJS {
@@ -25,6 +26,7 @@ declare global {
       return {
         activeUser: await (token ? verifyToken(token) : null),
         protectResolver,
+        client: client,
       };
     },
     // Using graphql-upload without CSRF prevention is very insecure.

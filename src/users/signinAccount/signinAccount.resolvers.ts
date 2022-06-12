@@ -5,9 +5,9 @@ import jwt from "jsonwebtoken";
 const SECRET_KEY = process.env.SECRET_KEY;
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Mutation: {
-    signinUser: async (_: any,
+    signinUser: async (_,
       { username, password }: {
         username: string;
         password: string;

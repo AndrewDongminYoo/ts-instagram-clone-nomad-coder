@@ -1,10 +1,11 @@
-import { User } from "@prisma/client";
-import client from "../client"
+import { Resolvers } from "../types";
 
-export default {
+const resolvers: Resolvers = {
   User: {
     isFollowing: async (
       { id }: { id: number; },
+      _,
+      { client }
     ) => {
       let exists = await client.user.count({
         where: {
@@ -19,15 +20,17 @@ export default {
     },
     isMyAccount: async (
       { id }: { id: number; },
-      _: any,
-      { activeUser }: { activeUser: User | null }
+      _,
+      { activeUser }
     ) => {
       console.log(`${id} === ${activeUser}`);
       if (!activeUser) return false
       return activeUser.id === id;
     },
     totalFollowing: async (
-      { id }: { id: number; }
+      { id }: { id: number; },
+      _,
+      { client }
     ) => {
       return await client.user.count({
         where: {
@@ -40,7 +43,9 @@ export default {
       })
     },
     totalFollowers: async (
-      { id }: { id: number; }
+      { id }: { id: number; },
+      _,
+      { client }
     ) => {
       return await client.user.count({
         where: {
@@ -54,3 +59,5 @@ export default {
     },
   }
 }
+
+export default resolvers;

@@ -1,21 +1,15 @@
-import { User } from "@prisma/client";
 import client from "../../client";
+import { Resolvers } from "../../types";
 
 // take means how many items to take from the database
 const take = 5;
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Query: {
-    seeFollowers: async (_: any,
-      { username, page }: {
-        username: string;
-        page: number;
-      },
-      { activeUser, protectResolver }: {
-        activeUser: User | null,
-        protectResolver: Function
-      }) => {
+    seeFollowers: async (_,
+      { username, page },
+      { activeUser, protectResolver }) => {
       try {
         protectResolver(activeUser);
         const existUser = await client.user.findUnique({
@@ -54,3 +48,5 @@ export default {
     },
   },
 }
+
+export default resolvers;

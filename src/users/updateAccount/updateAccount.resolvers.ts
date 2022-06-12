@@ -1,14 +1,12 @@
-import client from "../../client";
 import bcrypt from "bcrypt";
-import { User } from "@prisma/client";
-import { Upload } from "graphql-upload";
 import { createWriteStream, ReadStream } from "fs";
+import { Resolvers } from "../../types";
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Mutation: {
     updateAccount: async (
-      _: any,
+      _,
       {
         firstName,
         lastName,
@@ -17,19 +15,8 @@ export default {
         password,
         bio,
         avatar
-      }: {
-        firstName: string;
-        lastName: string;
-        username: string;
-        email: string;
-        password: string;
-        bio: string;
-        avatar: Upload;
       },
-      { activeUser, protectResolver }: {
-        activeUser: User | null,
-        protectResolver: Function
-      }) => {
+      { activeUser, protectResolver, client }) => {
       try {
         let { id } = protectResolver(activeUser);
         let avatarUrl = undefined;
@@ -90,3 +77,5 @@ export default {
     }
   },
 }
+
+export default resolvers;

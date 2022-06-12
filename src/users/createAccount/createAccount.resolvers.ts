@@ -1,19 +1,12 @@
-import client from "../../client";
 import bcrypt from "bcrypt";
+import { Resolvers } from "../../types";
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Mutation: {
-    createAccount: async (_: any, {
+    createAccount: async (_, {
       firstName, lastName, username, email, password
-    }: {
-      id: number;
-      firstName: string;
-      lastName: string;
-      username: string;
-      email: string;
-      password: string;
-    }) => {
+    }, { client }) => {
       try {
         // check if user exists or username is taken
         const existUser = await client.user.findFirst({
@@ -47,3 +40,5 @@ export default {
     },
   }
 };
+
+export default resolvers;

@@ -1,16 +1,13 @@
-import client from "../../client";
 import { User } from "@prisma/client";
+import { Resolvers } from "../../types";
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Mutation: {
     deleteAccount: async (
-      _: any,
-      { username }: { username: string; },
-      { activeUser, protectResolver }: {
-        activeUser: User | null,
-        protectResolver: Function
-      }
+      _,
+      { username },
+      { activeUser, protectResolver, client }
     ) => {
       try {
         // check if user exists
@@ -42,3 +39,5 @@ export default {
     }
   }
 };
+
+export default resolvers;

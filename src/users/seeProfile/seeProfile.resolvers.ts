@@ -1,12 +1,11 @@
-import { User } from "@prisma/client";
-import client from "../../client";
+import { Resolvers } from "../../types";
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Query: {
-    seeProfile: async (_: any,
-      { username }: { username: string; },
-      context: any
+    seeProfile: async (_,
+      { username },
+      { client }
     ) => {
       try {
         const user = await client.user.findUnique({
@@ -14,7 +13,6 @@ export default {
             username
           }
         })
-        console.log(context)
         console.log("see profile", user);
         return user;
       } catch {
@@ -23,3 +21,5 @@ export default {
     },
   },
 }
+
+export default resolvers;

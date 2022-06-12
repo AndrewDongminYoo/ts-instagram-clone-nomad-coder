@@ -5,9 +5,9 @@ import client from "../../client";
 const take = 5;
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Query: {
-    seeFollowing: async (_: any,
+    seeFollowing: async (_,
       { username, last }: {
         username: string;
         last: number;

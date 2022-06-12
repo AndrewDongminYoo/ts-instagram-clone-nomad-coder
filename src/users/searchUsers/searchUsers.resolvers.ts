@@ -1,8 +1,8 @@
-import client from "../../client";
+import { Resolvers } from "../../types";
 
-export default {
+const resolvers: Resolvers = {
   Query: {
-    searchUser: async (_: any, { keyword }: { keyword: string; }) => {
+    searchUser: async (_, { keyword }, { client }) => {
       try {
         if (!keyword) throw new Error("No keyword");
         if (keyword.length < 3) throw new Error("Keyword too short");
@@ -24,3 +24,5 @@ export default {
     }
   }
 }
+
+export default resolvers;

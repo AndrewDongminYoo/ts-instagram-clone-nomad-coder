@@ -1,15 +1,14 @@
 import { User } from "@prisma/client";
 import client from "../../client";
+import { Resolvers } from "../../types";
+
 
 // A map of functions which return data for the schema.
-export default {
+const resolvers: Resolvers = {
   Mutation: {
-    unfollowUser: async (_: any,
-      { toUnfollow }: { toUnfollow: string; },
-      { activeUser, protectResolver }: {
-        activeUser: User | null,
-        protectResolver: Function
-      }) => {
+    unfollowUser: async (_,
+      { toUnfollow },
+      { activeUser, protectResolver }) => {
       try {
         // console.log("resolver", activeUser);
         let { id } = await protectResolver(activeUser);
@@ -41,3 +40,5 @@ export default {
     },
   },
 }
+
+export default resolvers;
