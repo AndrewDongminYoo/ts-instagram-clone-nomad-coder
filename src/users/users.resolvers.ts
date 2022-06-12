@@ -57,6 +57,17 @@ const resolvers: Resolvers = {
         }
       })
     },
+    photos: async ({ id }, { page }, { client }) => {
+      if (!page) page = 5;
+      return await client.user.findUnique({
+        where: { id }
+      }).photos({ take: page })
+    },
+    totalPhotos: async ({ id }, _, { client }) => {
+      return await client.photo.count({
+        where: { userId: id }
+      });
+    }
   }
 }
 

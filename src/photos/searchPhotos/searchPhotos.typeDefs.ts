@@ -2,6 +2,6 @@ import { gql } from "apollo-server";
 
 export default gql`
   type Query {
-    searchPhoto(hashtag: String!): [Photo]
+    searchPhoto(keyword: String!, page: Int!): [Photo]
   }
 `;

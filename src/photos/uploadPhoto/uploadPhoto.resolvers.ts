@@ -1,5 +1,6 @@
 import { createWriteStream, ReadStream } from "fs";
 import { Resolvers } from "../../types";
+import { processHashtags } from "../photos.utils";
 
 const resolvers: Resolvers = {
   Mutation: {
@@ -18,39 +19,31 @@ const resolvers: Resolvers = {
             `${process.cwd()}/uploads/${newFilename}`);
           readStream.pipe(writeStream);
           url = `http://localhost:4000/uploads/${newFilename}`;
-          if (caption) {
-            // pare the caption to get the hashtags
-            const hashtags = caption.match(/#\w+/g);
-            let hashtagObj: object[] = [];
-            if (hashtags) {
-              hashtagObj = hashtags.map(hashtag => ({
-                where: { hashtag }, create: { hashtag },
-              }))
+          if (!caption) caption = "";
+          // pare the caption to get the hashtags
+          const hashtagObj = processHashtags(caption);
+          // save the photo with the pared caption
+          const photo = await client.photo.create({
+            data: {
+              url,
+              caption,
+              user: {
+                connect: {
+                  id
+                }
+              },
+              ...(hashtagObj && {
+                hashtags: {
+                  connetctOrCreate: hashtagObj,
+                }
+              })
             }
-            // save the photo with the pared caption
-            const photo = await client.photo.create({
-              data: {
-                url,
-                caption,
-                user: {
-                  connect: {
-                    id
-                  }
-                },
-                ...(hashtags && {
-                  hashtags: {
-                    connetctOrCreate: hashtagObj,
-                  }
-                })
-              }
-            });
-            return {
-              ok: true,
-              photo,
-            }
+          });
+          return {
+            ok: true,
+            photo,
           }
         }
-
       } catch (e: any) {
         return {
           ok: false,
