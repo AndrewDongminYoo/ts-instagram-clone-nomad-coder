@@ -1,7 +1,7 @@
 import { Resolvers } from "../../types";
 
 const resolvers: Resolvers = {
-  Mutation: {
+  Query: {
     searchPhoto: (_, { hashtag }) => { return [] },
   }
 }

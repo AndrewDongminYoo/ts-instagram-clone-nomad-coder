@@ -1,7 +1,7 @@
 import { gql } from "apollo-server";
 
 export default gql`
-  type Mutation {
+  type Query {
     searchPhoto(hashtag: String!): [Photo]
   }
 `;

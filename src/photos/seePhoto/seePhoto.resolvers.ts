@@ -1,7 +1,7 @@
 import { Resolvers } from "../../types";
 
 const resolvers: Resolvers = {
-  Mutation: {
+  Query: {
     seePhoto: (_, { id }) => { return null },
   }
 }
