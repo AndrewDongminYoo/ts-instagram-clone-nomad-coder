@@ -11,6 +11,7 @@ export default gql`
     userId: Int!
     hashtags: [Hashtag]
     comments: [Comment]
+    likes: Int!
   }
 
   type Comment {
@@ -22,5 +23,13 @@ export default gql`
     userId: Int!
     photo: Photo!
     photoId: Int!
+  }
+
+  type Like {
+    id: Int!
+    photo: Photo!
+    user: User!
+    createdAt: String!
+    updatedAt: String!
   }
 `

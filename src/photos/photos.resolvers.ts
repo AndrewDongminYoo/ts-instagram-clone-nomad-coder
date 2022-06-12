@@ -12,6 +12,11 @@ const resolvers: Resolvers = {
       return await client.hashtag.findMany({
         where: { photos: { some: { id } } }
       })
+    },
+    likes: async ({ id }) => {
+      return await client.like.findMany({
+        where: { photoId: id }
+      })
     }
   }
 }
