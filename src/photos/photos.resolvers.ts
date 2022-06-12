@@ -14,9 +14,22 @@ const resolvers: Resolvers = {
       })
     },
     likes: async ({ id }) => {
-      return await client.like.findMany({
+      return await client.like.count({
         where: { photoId: id }
       })
+    },
+    didILiked: async ({ id }, _, { activeUser, client, checkLogin }) => {
+      let user = checkLogin(activeUser);
+      if (!user) return false;
+      let like = client.like.findUnique({
+        where: {
+          userId_photoId: {
+            userId: user.id,
+            photoId: id,
+          }
+        }
+      })
+      return !!like;
     }
   }
 }

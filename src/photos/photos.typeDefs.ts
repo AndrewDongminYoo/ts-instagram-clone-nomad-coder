@@ -12,6 +12,7 @@ export default gql`
     hashtags: [Hashtag]
     comments: [Comment]
     likes: Int!
+    didILiked: Boolean!
   }
 
   type Comment {

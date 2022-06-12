@@ -12,7 +12,6 @@ const resolvers: Resolvers = {
         let url = undefined;
         if (file) {
           const { filename, createReadStream } = await file.promise;
-          console.log(typeof createReadStream);
           const readStream: ReadStream = createReadStream();
           const newFilename = `${id}-${Date.now()}-${filename}`
           const writeStream = createWriteStream(
@@ -32,13 +31,12 @@ const resolvers: Resolvers = {
                   id
                 }
               },
-              ...(hashtagObj && {
-                hashtags: {
-                  connetctOrCreate: hashtagObj,
-                }
-              })
+              hashtags: {
+                connectOrCreate: hashtagObj,
+              },
             }
           });
+          console.log(photo);
           return {
             ok: true,
             photo,

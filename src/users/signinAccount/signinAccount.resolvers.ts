@@ -1,6 +1,6 @@
-import client from "../../client";
 import bcrypt from "bcrypt";
 import jwt from "jsonwebtoken";
+import { Resolvers } from "../../types";
 
 const SECRET_KEY = process.env.SECRET_KEY;
 
@@ -8,10 +8,8 @@ const SECRET_KEY = process.env.SECRET_KEY;
 const resolvers: Resolvers = {
   Mutation: {
     signinUser: async (_,
-      { username, password }: {
-        username: string;
-        password: string;
-      }) => {
+      { username, password },
+      { client }) => {
       try {
         // check if user exists
         const user = await client.user.findFirst({
@@ -43,3 +41,5 @@ const resolvers: Resolvers = {
     },
   }
 };
+
+export default resolvers;
