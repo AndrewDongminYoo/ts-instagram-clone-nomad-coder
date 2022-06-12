@@ -7,11 +7,11 @@ const resolvers: Resolvers = {
     deleteAccount: async (
       _,
       { username },
-      { activeUser, protectResolver, client }
+      { activeUser, checkLogin, client }
     ) => {
       try {
         // check if user exists
-        let user = protectResolver(activeUser);
+        let user = checkLogin(activeUser);
         // save user to db and return user
         if (user.username !== username)
           throw new Error("You can only delete your own account.");

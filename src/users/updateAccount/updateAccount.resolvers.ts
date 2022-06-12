@@ -16,9 +16,9 @@ const resolvers: Resolvers = {
         bio,
         avatar
       },
-      { activeUser, protectResolver, client }) => {
+      { activeUser, checkLogin, client }) => {
       try {
-        let { id } = protectResolver(activeUser);
+        let { id } = checkLogin(activeUser);
         let avatarUrl = undefined;
         if (avatar) {
           const { filename, createReadStream } = await avatar.promise;

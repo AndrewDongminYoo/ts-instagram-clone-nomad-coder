@@ -1,7 +1,7 @@
 require('dotenv').config();
 import { ApolloServer } from 'apollo-server-express';
 import { resolvers, typeDefs } from './src/schema';
-import { protectResolver, verifyToken } from './src/users/users.utils';
+import { checkLogin, verifyToken } from './src/users/users.utils';
 import { Secret } from 'jsonwebtoken';
 import logger from 'morgan';
 import graphqlUploadExpress from "graphql-upload/graphqlUploadExpress.js";
@@ -25,7 +25,7 @@ declare global {
       // console.log(token);
       return {
         activeUser: await (token ? verifyToken(token) : null),
-        protectResolver,
+        checkLogin,
         client: client,
       };
     },

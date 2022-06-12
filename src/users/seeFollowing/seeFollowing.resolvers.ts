@@ -12,12 +12,12 @@ const resolvers: Resolvers = {
         username: string;
         last: number;
       },
-      { activeUser, protectResolver }: {
+      { activeUser, checkLogin }: {
         activeUser: User | null,
-        protectResolver: Function
+        checkLogin: Function
       }) => {
       try {
-        protectResolver(activeUser);
+        checkLogin(activeUser);
         const existUser = await client.user.findUnique({
           where: { username }, select: { id: true }
         })

@@ -9,9 +9,9 @@ const resolvers: Resolvers = {
   Query: {
     seeFollowers: async (_,
       { username, page },
-      { activeUser, protectResolver }) => {
+      { activeUser, checkLogin }) => {
       try {
-        protectResolver(activeUser);
+        checkLogin(activeUser);
         const existUser = await client.user.findUnique({
           where: { username }, select: { id: true }
         })

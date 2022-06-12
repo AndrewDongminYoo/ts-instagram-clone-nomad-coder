@@ -5,11 +5,11 @@ const resolvers: Resolvers = {
   Mutation: {
     followUser: async (_,
       { toFollow },
-      { activeUser, protectResolver, client }
+      { activeUser, checkLogin, client }
     ) => {
       try {
         // console.log("resolver", activeUser);
-        let { id } = await protectResolver(activeUser);
+        let { id } = await checkLogin(activeUser);
         const checkUser = await client.user.findUnique({ where: { username: toFollow } });
         if (!checkUser) throw new Error("User does not exist");
         if (checkUser.id === id) throw new Error("You cannot follow yourself");

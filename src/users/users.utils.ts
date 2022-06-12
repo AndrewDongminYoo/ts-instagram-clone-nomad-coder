@@ -23,7 +23,7 @@ export const verifyToken = async (token: string) => {
   }
 }
 
-export const protectResolver = (user: User | null): User => {
+export const checkLogin = (user: User | null): User => {
   if (!user) throw new Error("You must be logged in.");
   return user;
 }

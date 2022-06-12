@@ -19,12 +19,14 @@ type Args = {
   avatar: Upload;
   toUnfollow: string;
   toFollow: string;
+  file: Upload;
+  caption: string;
 }
 
 type Context = {
   client: PrismaClient
   activeUser: User | null
-  protectResolver: (user: User | null) => User
+  checkLogin: (user: User | null) => User
 }
 
 type Info = {
