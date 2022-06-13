@@ -19,11 +19,11 @@ Instaclone Backend.
 
 - [x] See Photo
 - [x] Upload Photo
-- [ ] Edit Photo
-- [ ] Like / Unlike Photo
-- [ ] See Photo Likes
+- [x] Edit Photo
+- [x] Like / Unlike Photo
+- [x] See Photo Likes
 - [x] See Feed
-- [ ] Search Photos
+- [x] Search Photos
 - [x] See Hashtags
 
 ## Comments

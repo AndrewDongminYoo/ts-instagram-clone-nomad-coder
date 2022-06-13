@@ -5,18 +5,16 @@ const resolvers: Resolvers = {
     seePhotoLikes: async (_, { id }, { client, checkLogin, activeUser }) => {
       try {
         checkLogin(activeUser);
-        return await client.like.findMany({
+        let likes = await client.like.findMany({
           where: {
             photoId: id,
           },
           select: {
-            user: {
-              select: {
-                username: true,
-              }
-            }
+            user: true
           }
         })
+        console.log(likes);
+        return likes.map(like => like.user);
       } catch (e: any) {
         return [];
       }

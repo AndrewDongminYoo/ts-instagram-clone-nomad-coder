@@ -36,7 +36,6 @@ const resolvers: Resolvers = {
               },
             }
           });
-          console.log(photo);
           return {
             ok: true,
             photo,
