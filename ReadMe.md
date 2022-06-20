@@ -1,9 +1,9 @@
 # Instaclone
-
-based on https://github.com/nomadcoders/instaclone-backend
-paid course of https://nomadcoders.co/
-ㄴㅣㄲㅗㄹㄹㅏㅅㅡ ㅁㅏㄴㅅㅔ
-
+  
+based on https://github.com/nomadcoders/instaclone-backend. 
+paid course of https://nomadcoders.co/. 
+ㄴㅣㄲㅗㄹㄹㅏㅅㅡ ㅁㅏㄴㅅㅔ. 
+  
 ## User:
 
 - [x] Create Account
